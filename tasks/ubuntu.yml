@@ -1,5 +1,5 @@
 ---
-- name: zabbix_agent_started
+- name: Install zabbix agent
   apt:
     name: zabbix-agent
     state: present
