@@ -1,0 +1,5 @@
+---
+- name: install zabbix agent
+  pacman:
+    name: zabbix-agent
+    state: present

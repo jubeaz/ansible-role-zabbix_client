@@ -1,0 +1,28 @@
+---
+# tasks file for zabbix-client
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: set-config
+  template:
+    src: templates/zabbix_agentd.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+    owner: "{{ zbbx_c_owner }}"
+    group: "{{ zbbx_c_group }}"
+    mode: 0644
+  notify: Insure zabbix agent is started
+
+- name: Get installed packages
+  package_facts:
+    manager: "auto"
+
+- name: open firewall ports for zabbix agent
+  ufw:
+    rule: allow
+    direction: in
+    src: "{{ zbbx_c_ufw_from }}"
+    to_port: "{{ zbbx_c_listen_port }}"
+  when: "'ufw' in ansible_facts.packages"
