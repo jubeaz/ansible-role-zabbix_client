@@ -3,3 +3,6 @@
   pacman:
     name: zabbix-agent
     state: present
+  register: __pacman
+  changed_when: __pacman.packages is defined
+
