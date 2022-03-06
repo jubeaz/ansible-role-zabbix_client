@@ -1,10 +1,17 @@
 ---
-# tasks file for zabbix-client
-- include_tasks: ubuntu.yml
-  when: ansible_distribution == "Ubuntu"
+- name: assert proper distribution
+  assert:
+    that:
+      - ansible_distribution in ['Kali', 'Ubuntu', 'Archlinux']
+    quiet: true
 
-- include_tasks: arch.yml
-  when: ansible_distribution == "Archlinux"
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: Include common variables
+  include_vars: "common.yml"
+
+- include_tasks: "{{ ansible_distribution }}.yml" 
 
 - name: set-config
   template:

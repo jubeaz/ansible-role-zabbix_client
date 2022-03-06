@@ -1,5 +1,0 @@
----
-# vars file for zabbix-client
-zbbx_c_owner: "{{ 'zabbix' if ansible_distribution == 'Ubuntu' else 'zabbix-agent' }}"
-zbbx_c_group: "{{ 'zabbix' if ansible_distribution == 'Ubuntu' else 'zabbix-agent' }}"
-
